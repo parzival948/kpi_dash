@@ -59,14 +59,14 @@ def render(filters):
         if not c_country_act.empty and not c_budget.empty:
             wf = compute_waterfall_multi(c_country_act, c_budget, c_fx, metric="cost")
             st.plotly_chart(render_waterfall(wf, f"Cost Waterfall — {COUNTRY_DISPLAY.get(sel_country, sel_country)} ({cur_label})"),
-                            use_container_width=True)
+                            width="stretch")
 
     with col2:
         st.markdown("**Income Waterfall**")
         if not c_country_act.empty and not c_budget.empty:
             wf_inc = compute_waterfall_multi(c_country_act, c_budget, c_fx, metric="revenue")
             st.plotly_chart(render_waterfall(wf_inc, f"Income Waterfall — {COUNTRY_DISPLAY.get(sel_country, sel_country)} ({cur_label})"),
-                            use_container_width=True)
+                            width="stretch")
 
     st.markdown("---")
 
@@ -80,7 +80,7 @@ def render(filters):
                      title=f"Income / Cost / Margin per Courier ({cur_label})",
                      color_discrete_map={"Income": "#2ecc71", "Cost": "#e74c3c", "Margin": "#3498db"})
         fig.update_layout(height=350)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     st.markdown("---")
     col3, col4 = st.columns(2)
@@ -107,7 +107,7 @@ def render(filters):
             fig.add_vline(x=0, line_dash="dash", line_color="gray")
             fig.update_traces(textposition="top center")
             fig.update_layout(height=350)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
     with col4:
         st.markdown("**Province Cost/Ship**")
@@ -118,7 +118,7 @@ def render(filters):
                          color_continuous_scale="RdYlGn_r",
                          title=f"Cost/Ship by Province ({cur_label})")
             fig.update_layout(height=350, yaxis=dict(autorange="reversed"))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
     st.markdown("---")
 
@@ -140,4 +140,4 @@ def render(filters):
                 detail_df[col] = detail_df[col].map(f"{p}{{:.2f}}".format if not currency == "Local" else "{:.2f}".format)
             else:
                 detail_df[col] = detail_df[col].map("{:,.0f}".format)
-        st.dataframe(detail_df, use_container_width=True, hide_index=True)
+        st.dataframe(detail_df, width="stretch", hide_index=True)

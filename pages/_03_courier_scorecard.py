@@ -114,7 +114,7 @@ def render(filters):
             else ("color: #c0392b" if isinstance(v, (int, float)) and v > 0 else ""),
             subset=["Cost Var % vs Median"],
         )
-    st.dataframe(styler, use_container_width=True, hide_index=True)
+    st.dataframe(styler, width="stretch", hide_index=True)
 
     st.markdown("---")
     col1, col2 = st.columns(2)
@@ -125,14 +125,14 @@ def render(filters):
         fig = px.bar(avg_cps, x="Cost/Ship", y="Courier", orientation="h", color="Cost/Ship",
                      color_continuous_scale="RdYlGn_r", title="Courier Ranking by Avg Cost/Ship")
         fig.update_layout(height=350, yaxis=dict(autorange="reversed"))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     with col2:
         st.markdown("**Country Cost/Ship Distribution**")
         fig = px.box(scorecard, x="Country", y="Cost/Ship", color="Country",
                      title="Cost/Ship Distribution by Country", points="all")
         fig.update_layout(height=350, showlegend=False)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     st.markdown("---")
 
@@ -156,4 +156,4 @@ def render(filters):
             sub_fmt = {c: f"{p}{{:,.2f}}" if "Income" in c or "Cost" in c or "Margin" in c else "{:,.0f}" for c in detail.columns if c not in ("Country", "Courier", "Brand")}
             if currency == "Local":
                 sub_fmt = {c: "{:,.2f}" if "Income" in c or "Cost" in c or "Margin" in c else "{:,.0f}" for c in sub_fmt}
-            st.dataframe(detail.style.format(sub_fmt), use_container_width=True, hide_index=True)
+            st.dataframe(detail.style.format(sub_fmt), width="stretch", hide_index=True)

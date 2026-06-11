@@ -1,6 +1,8 @@
 import sys
 import importlib
 import streamlit as st
+import plotly.io as pio
+pio.templates.default = "plotly_dark"
 
 for mod in list(sys.modules.keys()):
     if mod.startswith("utils.") or mod == "utils" or mod == "config":
@@ -104,7 +106,7 @@ def sidebar() -> dict:
             key="variance_view",
         )
 
-        if st.button("🗑️ Clear Cache", use_container_width=True):
+        if st.button("🗑️ Clear Cache", width="stretch"):
             st.cache_data.clear()
             st.session_state.cache_cleared = True
             st.rerun()
@@ -141,7 +143,7 @@ def render_nav():
         for p in pages:
             if st.button(
                 p,
-                use_container_width=True,
+                width="stretch",
                 type="secondary" if st.session_state.page != p else "primary",
                 key=f"nav_{p}",
             ):

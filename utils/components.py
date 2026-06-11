@@ -9,10 +9,10 @@ def kpi_card(label, value, delta=None, delta_color="normal"):
     with col:
         st.markdown(
             f"""
-        <div style="background:#fff;border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,0.12);margin-bottom:8px;">
-            <div style="font-size:13px;color:#666;margin-bottom:4px;">{label}</div>
-            <div style="font-size:22px;font-weight:700;color:#1a1a1a;">{value}</div>
-            {f'<div style="font-size:14px;color:{"#1b8a3d" if delta_color=="normal" and delta and "-" not in delta.replace("%","") else "#c0392b" };">{delta}</div>' if delta else ''}
+        <div style="background:var(--secondary-background-color);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,0.3);margin-bottom:8px;">
+            <div style="font-size:13px;color:var(--text-color);opacity:0.7;margin-bottom:4px;">{label}</div>
+            <div style="font-size:22px;font-weight:700;color:var(--text-color);">{value}</div>
+            {f'<div style="font-size:14px;color:{"var(--success-color)" if delta_color=="normal" and delta and "-" not in delta.replace("%","") else "var(--error-color)"};">{delta}</div>' if delta else ''}
         </div>
         """,
             unsafe_allow_html=True,

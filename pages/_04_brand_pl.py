@@ -123,7 +123,7 @@ def render(filters):
         else ("color: #c0392b" if isinstance(v, (int, float)) and v < 0 else ""),
         subset=var_cols,
     )
-    st.dataframe(styler, use_container_width=True, hide_index=True)
+    st.dataframe(styler, width="stretch", hide_index=True)
 
     st.markdown("---")
     col1, col2 = st.columns(2)
@@ -142,7 +142,7 @@ def render(filters):
                           annotation_text=f"Total: {p}{total_mv:+,.0f}")
             fig.update_layout(title=f"Each Brand's Margin Var → Total ({cur_label})", height=350,
                               showlegend=False, yaxis_title=f"Margin Variance ({cur_label})")
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
     with col2:
         st.markdown("**Monthly Margin % Trend**")
@@ -172,7 +172,7 @@ def render(filters):
                               markers=True, title="Actual Margin % Trend",
                               labels={"month": "Month", "act_margin_pct": "Margin %", "brand": "Brand"})
                 fig.update_layout(height=350)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
         else:
             st.info("Select YTD and multiple months to see trend.")
 
@@ -195,4 +195,4 @@ def render(filters):
             dfmt = {c: f"{p}{{:,.2f}}" if "Revenue" in c or "Cost" in c or "Margin" in c else "{:,.0f}" for c in detail.columns if c not in ("Country", "Brand")}
             if currency == "Local":
                 dfmt = {c: "{:,.2f}" if "Revenue" in c or "Cost" in c or "Margin" in c else "{:,.0f}" for c in dfmt}
-            st.dataframe(detail.style.format(dfmt), use_container_width=True, hide_index=True)
+            st.dataframe(detail.style.format(dfmt), width="stretch", hide_index=True)

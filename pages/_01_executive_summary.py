@@ -135,7 +135,7 @@ def render(filters):
             wf_cost = compute_waterfall_multi(country_act, budget, fx, metric="cost")
             st.plotly_chart(
                 render_waterfall(wf_cost, f"Cost Waterfall ({cur_label})"),
-                use_container_width=True,
+                width="stretch",
             )
 
     with col2:
@@ -143,7 +143,7 @@ def render(filters):
             wf_margin = compute_waterfall_multi(country_act, budget, fx, metric="margin")
             st.plotly_chart(
                 render_waterfall(wf_margin, f"Margin Waterfall ({cur_label})"),
-                use_container_width=True,
+                width="stretch",
             )
 
     if not brand_act.empty and not budget.empty:
@@ -162,7 +162,7 @@ def render(filters):
         extremes = pd.concat([merged.head(5), merged.tail(5)])
         st.plotly_chart(
             create_diverging_bar(extremes, x_col="margin_var_pct", y_col="brand", title="Top/Bottom 5 Brands by Margin Variance %", limit=10),
-            use_container_width=True,
+            width="stretch",
         )
 
     st.markdown("---")
@@ -175,7 +175,7 @@ def render(filters):
                                 color_continuous_scale="RdYlGn_r", title="Courier Cost Treemap (Local Currency)")
             fig_tm.update_traces(textinfo="label+value+percent root")
             fig_tm.update_layout(height=350, margin=dict(l=10, r=10, t=30, b=10))
-            st.plotly_chart(fig_tm, use_container_width=True)
+            st.plotly_chart(fig_tm, width="stretch")
 
     with col4:
         if not country_act.empty and not budget.empty:
@@ -209,7 +209,7 @@ def render(filters):
                     f"Margin ({cur_label})": f"{p}{am:,.0f}", "Margin %": f"{mp:.1%}", "Margin Var %": f"{mvp:+.1%}",
                     f"Cost/Ship ({cur_label})": f"{p}{cps:.2f}",
                 })
-            st.dataframe(pd.DataFrame(summary_data), use_container_width=True, hide_index=True)
+            st.dataframe(pd.DataFrame(summary_data), width="stretch", hide_index=True)
 
     st.markdown("---")
 
@@ -225,4 +225,4 @@ def render(filters):
             detail = detail.drop(columns=["country"]).set_index("Country")
             for col in detail.select_dtypes("number").columns:
                 detail[col] = detail[col].map("{:,.0f}".format)
-            st.dataframe(detail, use_container_width=True)
+            st.dataframe(detail, width="stretch")

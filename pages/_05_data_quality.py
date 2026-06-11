@@ -59,14 +59,14 @@ def render(filters):
                 title="Shipment Count: Country × Courier",
             )
             fig.update_layout(height=300)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
             pmax = pivot.values.max()
             st.dataframe(
                 pivot.style.format("{:,.0f}").applymap(
                     lambda v: f"background-color: rgba(0,0,255,{min(v/pmax, 0.8)})" if pmax > 0 else "",
                 ),
-                use_container_width=True,
+                width="stretch",
             )
 
     # ---- Tab 2: Budget ↔ Actuals Reconciliation ----
@@ -132,7 +132,7 @@ def render(filters):
                         "Actual Cost": "${:,.2f}",
                     }
                 ),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
         else:
@@ -167,12 +167,12 @@ def render(filters):
                         "Variance %": "{:+.2%}",
                     }
                 ).applymap(
-                    lambda v: "background-color: #ffcccc"
+                    lambda v: "background-color: #5c0000; color: #ffcccc"
                     if isinstance(v, bool) and v
                     else "",
                     subset=["flag"],
                 ),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
 
@@ -209,7 +209,7 @@ def render(filters):
                             "total_revenue_local",
                         ]
                     ].sort_values("order_id"),
-                    use_container_width=True,
+                    width="stretch",
                     hide_index=True,
                 )
 
@@ -252,7 +252,7 @@ def render(filters):
                     }
                 )
             audit_df = pd.DataFrame(audit_rows)
-            st.dataframe(audit_df, use_container_width=True, hide_index=True)
+            st.dataframe(audit_df, width="stretch", hide_index=True)
 
             # Cost = 0 check
             zero_cost = (actuals["total_cost_local"] == 0).sum()
@@ -309,7 +309,7 @@ def render(filters):
                     else ("color: #c0392b" if isinstance(v, (int, float)) and v < 0 else ""),
                     subset=["Var", "Var %"],
                 ),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
 
@@ -325,6 +325,6 @@ def render(filters):
                 labels={"Var": "Volume Variance"},
             )
             fig.update_layout(height=400)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
         else:
             st.info("Load actuals and budget to see volume reconciliation.")
