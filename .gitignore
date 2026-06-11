@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.pyo
+.streamlit/cache/
+test_*.py
+st_*.txt
+*.tmp
