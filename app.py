@@ -1,12 +1,7 @@
 import sys
-import importlib
 import streamlit as st
 import plotly.io as pio
 pio.templates.default = "plotly_dark"
-
-for mod_name in list(sys.modules.keys()):
-    if mod_name.startswith("utils.") or mod_name in ("utils", "config"):
-        sys.modules.pop(mod_name, None)
 
 from utils.data_loader import get_all_data
 from config import COUNTRY_DISPLAY
