@@ -49,14 +49,16 @@ def sidebar() -> dict:
         is_ytd = period == "YTD"
 
         months = data["months"]
-        default_month = months[-1] if months else None
+        act_months = sorted(data["actuals"]["month"].unique()) if not data["actuals"].empty else []
+        default_month = act_months[-1] if act_months else (months[-1] if months else None)
         sel_months = [default_month] if default_month else []
 
         if not is_ytd:
+            default_idx = months.index(default_month) if default_month in months else len(months) - 1
             sel_month = st.selectbox(
                 "Month",
                 months,
-                index=len(months) - 1 if months else 0,
+                index=default_idx if months else 0,
                 key="month_sel",
             )
             sel_months = [sel_month]
