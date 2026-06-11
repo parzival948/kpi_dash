@@ -4,4 +4,5 @@ __pycache__/
 .streamlit/cache/
 test_*.py
 st_*.txt
+streamlit_*.txt
 *.tmp
