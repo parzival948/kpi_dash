@@ -160,7 +160,11 @@ def filter_data(
     actuals = data["actuals"].copy() if not data["actuals"].empty else pd.DataFrame()
 
     if selected_months:
-        if not is_ytd:
+        if is_ytd and not actuals.empty:
+            ytd_months = sorted(actuals["month"].unique())
+            budget = budget[budget["month"].isin(ytd_months)]
+            fx = fx[fx["month"].isin(ytd_months)]
+        elif not is_ytd:
             budget = budget[budget["month"].isin(selected_months)]
             fx = fx[fx["month"].isin(selected_months)]
             if not actuals.empty:
